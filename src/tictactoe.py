@@ -19,3 +19,35 @@ def winner(state):
                 return -1
     return 0
 
+def min_value(state):
+    """
+    Returns the value of state if it is min (O)'s turn.
+    """
+    if winner(state) != 0:
+        return winner(state)
+    if not legal_moves(state):
+        return winner(state)
+    best_value = 2
+    for m in legal_moves(state):
+        s = successor(state, m, 'O')
+        value = max_value(s)
+        if value < best_value:
+            best_value = value
+    return best_value
+
+
+def max_value(state):
+    """
+    Returns the value of state if it is max (X)'s turn.
+    """
+    if winner(state) != 0:
+        return winner(state)
+    if not legal_moves(state):
+        return winner(state)
+    best_value = -2
+    for m in legal_moves(state):
+        s = successor(state, m, 'X')
+        value = min_value(s)
+        if value > best_value:
+            best_value = value
+    return best_value
