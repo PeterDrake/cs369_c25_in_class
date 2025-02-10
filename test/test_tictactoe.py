@@ -13,15 +13,15 @@ def test_finds_win_for_o():
     assert winner('...XX.OOO') == -1
 
 def test_finds_value_at_end_of_game():
-    assert min_value('...XXX.OO') == 1
-    assert max_value('...XXX.OO') == 1
+    assert value('...XXX.OO', 'O', less, 2) == 1
+    assert value('...XXX.OO', 'X', greater, -2) == 1
 
 def test_finds_win_in_one_move():
-    assert max_value('XX....O.O') == 1
+    assert value('XX....O.O', 'X', greater, -2) == 1
 
 def test_finds_value_after_two_moves():
-    assert min_value('XOXXXOO..') == 0
+    assert value('XOXXXOO..', 'O', less, 2) == 0
 
 def test_finds_value_after_three_moves():
-    assert max_value('.X.X.O.O.') == 1
-    assert min_value('.X.X.O.O.') == -1
+    assert value('.X.X.O.O.', 'X', greater, -2) == 1
+    assert value('.X.X.O.O.', 'O', less, 2) == -1
