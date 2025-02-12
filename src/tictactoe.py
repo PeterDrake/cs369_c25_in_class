@@ -19,39 +19,6 @@ def winner(state):
                 return -1
     return 0
 
-# def min_value(state):
-#     """
-#     Returns the value of state if it is min (O)'s turn.
-#     """
-#     if winner(state) != 0:
-#         return winner(state)
-#     if not legal_moves(state):
-#         return winner(state)
-#     best_value = 2
-#     for m in legal_moves(state):
-#         s = successor(state, m, 'O')
-#         value = max_value(s)
-#         if value < best_value:
-#             best_value = value
-#     return best_value
-#
-#
-# def max_value(state):
-#     """
-#     Returns the value of state if it is max (X)'s turn.
-#     """
-#     if winner(state) != 0:
-#         return winner(state)
-#     if not legal_moves(state):
-#         return winner(state)
-#     best_value = -2
-#     for m in legal_moves(state):
-#         s = successor(state, m, 'X')
-#         value = min_value(s)
-#         if value > best_value:
-#             best_value = value
-#     return best_value
-
 def less(a, b):
     return a < b
 
@@ -64,10 +31,10 @@ def value(state, player, better, bad):
     :param better takes two values and returns True if the first is better.
     :param bad a value worse than anything we will see.
     """
-    if winner(state) != 0:
+    if winner(state) != 0:  # Someone has already won
         return winner(state)
-    if not legal_moves(state):
-        return winner(state)
+    if not legal_moves(state):  # Game ended in a tie
+        return 0
     best_value = bad
     for m in legal_moves(state):
         s = successor(state, m, player)
@@ -78,3 +45,14 @@ def value(state, player, better, bad):
         if better(v, best_value):
             best_value = v
     return best_value
+
+def best_move_for_x(state):
+    best_value = -2
+    best_move = None
+    for m in legal_moves(state):
+        s = successor(state, m, 'X')
+        v = value(s, 'O', less, 2)
+        if v > best_value:
+            best_value = v
+            best_move = m
+    return best_move

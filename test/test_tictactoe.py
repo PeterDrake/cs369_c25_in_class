@@ -25,3 +25,9 @@ def test_finds_value_after_two_moves():
 def test_finds_value_after_three_moves():
     assert value('.X.X.O.O.', 'X', greater, -2) == 1
     assert value('.X.X.O.O.', 'O', less, 2) == -1
+
+def test_finds_best_move_depth_1():
+    assert best_move_for_x('XX.O....O') == 2
+
+def test_finds_best_move_deep():
+    assert best_move_for_x('X..OO...X') == 5
